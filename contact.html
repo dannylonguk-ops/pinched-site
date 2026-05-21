@@ -277,9 +277,15 @@
 
     /* ── Language Selector ─────────────────────── */
     #google_translate_element,
+    .goog-te-banner-frame.skiptranslate,
     .goog-te-banner-frame,
-    .goog-te-gadget { display: none !important; }
+    .goog-te-gadget,
+    .goog-te-balloon-frame,
+    .goog-tooltip,
+    .goog-tooltip-content { display: none !important; }
     body { top: 0 !important; }
+    .goog-te-spinner-pos { display: none !important; }
+    iframe.skiptranslate { display: none !important; }
     .lang-selector { position: relative; }
     .lang-btn {
       display: flex; align-items: center; gap: 6px;
