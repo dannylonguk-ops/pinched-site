@@ -601,7 +601,7 @@
 
       /* Video — scale up 200%, keep centred on viewport, no horizontal scroll */
       #video { overflow: hidden; }
-      .video-wrap { width: 200vw; position: relative; left: 50vw; transform: translateX(-50%) translateY(28px); max-width: none; border-radius: 0; }
+      .video-wrap { width: 200vw; position: relative; left: calc(50vw - 200px); transform: translateX(-50%) translateY(28px); max-width: none; border-radius: 0; }
       .video-wrap.vis { transform: translateX(-50%) translateY(0); }
     }
     @media (max-width: 480px) {
