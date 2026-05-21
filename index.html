@@ -598,6 +598,9 @@
 
       /* Proof strip — allow wrapping */
       .proof-row { gap: 20px; }
+
+      /* Video — scale up 250%, keep centred, let white bars run off screen */
+      .video-wrap { width: 250%; margin-left: -75%; border-radius: 0; max-width: none; }
     }
     @media (max-width: 480px) {
       .cats-grid  { grid-template-columns: repeat(2,1fr); }
@@ -766,7 +769,7 @@
       <h2 class="section-title">Local deals, promotions & rewards — all in one app</h2>
       <p class="section-sub">Watch how Pinched connects you with the best promotions around you.</p>
     </div>
-    <div class="fu" style="max-width:860px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(10,186,181,.2);">
+    <div class="fu video-wrap" style="max-width:860px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(10,186,181,.2);">
       <video
         src="Homepage Video.mp4"
         controls
