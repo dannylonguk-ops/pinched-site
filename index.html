@@ -178,6 +178,14 @@
     }
     .hero-title .hl  { color: var(--tiffany); }
     .hero-title .gld { color: var(--gold); }
+    #word-less, #word-pinched { display: inline-block; transform-origin: center; }
+    @keyframes wordPop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.28); }
+      70%  { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+    .word-pop { animation: wordPop 0.55s cubic-bezier(.36,.07,.19,.97) forwards; }
     .hero-sub {
       font-size: 18px; color: rgba(255,255,255,.62);
       line-height: 1.7; margin-bottom: 38px; max-width: 460px;
@@ -712,8 +720,8 @@
       <div class="hero-badge"><span class="badge-dot"></span>Available on iOS &amp; Android</div>
       <h1 class="hero-title">
         Get More,<br>
-        Spend <span class="gld">Less,</span><br>
-        Get <span class="hl">Pinched.</span>
+        Spend <span class="gld" id="word-less">Less,</span><br>
+        Get <span class="hl" id="word-pinched">Pinched.</span>
       </h1>
       <p class="hero-sub">
         Discover promotions from local businesses — at home or when you travel.
@@ -1168,6 +1176,21 @@
 
   document.addEventListener('click', function(e) {
     if (!e.target.closest('#langSelector')) closeLang();
+  });
+
+  /* ── Title word pop on load ── */
+  window.addEventListener('load', function() {
+    function pop(id, delay) {
+      setTimeout(function() {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('word-pop');
+        void el.offsetWidth; /* force reflow so re-adding the class works */
+        el.classList.add('word-pop');
+      }, delay);
+    }
+    pop('word-less',    2000);   /* 2s after load */
+    pop('word-pinched', 2700);   /* 0.7s after "less" starts */
   });
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
