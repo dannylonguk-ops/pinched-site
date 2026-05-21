@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Pinched</title>
+  <meta name="description" content="Learn about Pinched — the app connecting customers with local businesses through promotions, Pinched Points, and real rewards." />
+  <link rel="icon" href="Favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ─────────────────────────────── */
+    :root {
+      --tiffany:       #0ABAB5;
+      --tiffany-dark:  #089490;
+      --tiffany-light: #E6F9F8;
+      --gold:          #E8B84B;
+      --dark:          #067370;
+      --dark-alt:      #089490;
+      --text:          #1A1A2E;
+      --text-light:    #666;
+      --text-muted:    #999;
+      --white:         #ffffff;
+      --bg:            #F4F9F9;
+      --radius:        16px;
+      --shadow:        0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg:     0 12px 48px rgba(0,0,0,0.14);
+      --transition:    0.3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 6px 14px;
+      border-radius: 99px; margin-bottom: 16px;
+    }
+    .tag.white { color: rgba(255,255,255,.9); background: rgba(255,255,255,.12); }
+
+    h2.section-title {
+      font-size: clamp(26px, 4vw, 44px); font-weight: 900;
+      line-height: 1.15; color: var(--text); margin-bottom: 14px;
+    }
+    h2.section-title.white { color: var(--white); }
+
+    p.section-sub {
+      font-size: 17px; color: var(--text-light);
+      max-width: 600px; line-height: 1.7;
+    }
+    p.section-sub.white { color: rgba(255,255,255,.65); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px;
+      padding: 13px 26px; border-radius: 12px; border: none;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-primary { background: var(--tiffany); color: white; }
+    .btn-primary:hover { background: var(--tiffany-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.35); }
+
+    .fu { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── NAVBAR ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000; padding: 0 24px; transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: auto; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 700; color: rgba(255,255,255,.85); transition: var(--transition); }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--tiffany) !important; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: white; display: block; transition: var(--transition); border-radius: 2px; }
+    nav.scrolled .hamburger span { background: var(--text); }
+
+    /* ── MOBILE MENU ─────────────────────────────── */
+    .mob-menu {
+      position: fixed; inset: 0; background: var(--dark); z-index: 999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 36px;
+      transform: translateX(100%); transition: transform .35s ease;
+    }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-size: 22px; font-weight: 800; color: white; transition: var(--transition); }
+    .mob-menu a:hover { color: var(--tiffany); }
+    .mob-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: white; font-size: 28px; cursor: pointer; line-height: 1; }
+
+    /* ── PAGE HERO ───────────────────────────────── */
+    #page-hero {
+      background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%);
+      padding: 140px 24px 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #page-hero::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #page-hero::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .page-hero-inner .tag { margin-bottom: 20px; }
+    .page-title {
+      font-size: clamp(40px, 6vw, 72px); font-weight: 900;
+      color: var(--white); line-height: 1.08; margin-bottom: 20px;
+    }
+    .page-sub {
+      font-size: 18px; color: rgba(255,255,255,.65); line-height: 1.7; max-width: 580px; margin: 0 auto;
+    }
+
+    /* ── MISSION ─────────────────────────────────── */
+    #mission { padding: 96px 24px; background: var(--white); }
+    .mission-inner {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .mission-text p {
+      font-size: 17px; color: var(--text-light); line-height: 1.8; margin-bottom: 20px;
+    }
+    .mission-text p:last-child { margin-bottom: 0; }
+    .mission-text strong { color: var(--text); }
+    .mission-visual {
+      display: flex; justify-content: center; align-items: center; position: relative;
+    }
+    .mission-visual::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(10,186,181,.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .mission-lobster {
+      width: 420px; height: auto; position: relative; z-index: 1;
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 16px 40px rgba(10,186,181,.18));
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
+    }
+
+    /* ── VALUES ──────────────────────────────────── */
+    #values { padding: 80px 24px; background: var(--bg); }
+    .values-inner { max-width: 1140px; margin: 0 auto; }
+    .values-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px;
+    }
+    .value-card {
+      background: var(--white); border-radius: var(--radius); padding: 34px 28px;
+      box-shadow: var(--shadow); transition: var(--transition);
+      border-top: 4px solid transparent;
+    }
+    .value-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-top-color: var(--tiffany); }
+    .value-card.gold-top { border-top-color: var(--gold); }
+    .value-ico { font-size: 36px; margin-bottom: 18px; }
+    .value-card h3 { font-size: 19px; font-weight: 900; color: var(--text); margin-bottom: 10px; }
+    .value-card p  { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+    /* ── OUR STORY ───────────────────────────────── */
+    #story {
+      padding: 96px 24px;
+      background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%);
+      position: relative; overflow: hidden;
+    }
+    #story::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #story::after {
+      content: ''; position: absolute; bottom: -60px; left: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .story-inner {
+      max-width: 860px; margin: 0 auto; position: relative; z-index: 1;
+    }
+    .story-body {
+      font-size: 17px; color: rgba(255,255,255,.75); line-height: 1.85; margin-top: 36px;
+    }
+    .story-body p { margin-bottom: 22px; }
+    .story-body p:last-child { margin-bottom: 0; }
+    .story-body strong { color: white; }
+    .challenges {
+      display: flex; flex-direction: column; gap: 16px;
+      margin: 28px 0; padding: 28px 32px;
+      background: rgba(255,255,255,.08); border-radius: var(--radius);
+      border-left: 4px solid rgba(255,255,255,.3);
+    }
+    .challenge {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 16px; color: rgba(255,255,255,.85); font-weight: 600; line-height: 1.5;
+    }
+    .challenge-num {
+      width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%;
+      background: rgba(255,255,255,.15); display: flex; align-items: center;
+      justify-content: center; font-size: 13px; font-weight: 900; color: white;
+    }
+
+    /* ── CONTACT ─────────────────────────────────── */
+    #contact { padding: 96px 24px; background: var(--white); }
+    .contact-inner {
+      max-width: 700px; margin: 0 auto; text-align: center;
+    }
+    .contact-card {
+      margin-top: 44px; background: var(--bg); border-radius: 20px;
+      padding: 44px 40px; box-shadow: var(--shadow);
+    }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 20px; font-weight: 800; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 16px 28px;
+      border-radius: 14px; transition: var(--transition);
+      margin-top: 8px;
+    }
+    .contact-email:hover { background: var(--tiffany); color: white; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.3); }
+    .contact-email span { font-size: 22px; }
+    .contact-note { font-size: 14px; color: var(--text-muted); margin-top: 18px; line-height: 1.6; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--dark); padding: 60px 24px 28px; }
+    .ft-inner { max-width: 1140px; margin: 0 auto; }
+    .ft-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
+      padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 28px;
+    }
+    .ft-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ft-brand-logo img { height: 32px; width: auto; }
+    .ft-tagline { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; margin-bottom: 22px; }
+    .ft-social { display: flex; gap: 9px; }
+    .social-a {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); font-size: 13px; font-weight: 800;
+      transition: var(--transition);
+    }
+    .social-a:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+    .ft-col h4 { font-size: 12px; font-weight: 800; color: white; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 16px; }
+    .ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .ft-col ul a { font-size: 14px; color: rgba(255,255,255,.4); font-weight: 600; transition: var(--transition); }
+    .ft-col ul a:hover { color: var(--tiffany); }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .ft-copy   { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; }
+    .ft-links  { display: flex; gap: 22px; }
+    .ft-links a { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; transition: var(--transition); }
+    .ft-links a:hover { color: var(--tiffany); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .ft-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .mission-inner { grid-template-columns: 1fr; }
+      .mission-visual { display: none; }
+      .values-grid { grid-template-columns: 1fr; }
+      .ft-top { grid-template-columns: 1fr 1fr; }
+      .contact-card { padding: 32px 24px; }
+    }
+    @media (max-width: 480px) {
+      .ft-top { grid-template-columns: 1fr; }
+      .challenges { padding: 20px; }
+    }
+
+    /* ── Language Selector ─────────────────────── */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .goog-te-gadget { display: none !important; }
+    body { top: 0 !important; }
+    .lang-selector { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22);
+      color: white; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800;
+      padding: 7px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition);
+    }
+    nav.scrolled .lang-btn { background: var(--bg); border-color: #ddd; color: var(--text); }
+    nav.scrolled .lang-btn:hover { background: var(--tiffany-light); border-color: var(--tiffany); color: var(--tiffany); }
+    .lang-btn svg { transition: transform var(--transition); }
+    .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: white; border-radius: 14px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18); min-width: 172px;
+      display: none; flex-direction: column; gap: 2px;
+      z-index: 9999; border: 1px solid rgba(0,0,0,.06);
+    }
+    .lang-selector.open .lang-dropdown { display: flex; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: none; font-family: 'Nunito', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+      padding: 9px 12px; border-radius: 9px; cursor: pointer;
+      transition: var(--transition); text-align: left; width: 100%;
+    }
+    .lang-option:hover  { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option.active { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option .lf { font-size: 17px; line-height: 1; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══ MOBILE MENU ══════════════════════════════ -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="index.html#how" onclick="closeMob()">How It Works</a>
+  <a href="index.html#features" onclick="closeMob()">Features</a>
+  <a href="index.html#biz" onclick="closeMob()">For Businesses</a>
+  <a href="index.html#download" onclick="closeMob()">Download</a>
+</div>
+
+<!-- ══ NAVBAR ══════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Pinched" style="height:38px; width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#biz">For Businesses</a></li>
+      <li><a href="index.html#multi">Languages</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+          <span id="currentFlag">&#127468;&#127463;</span>
+          <span id="currentLangLabel">EN</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown">
+          <button class="lang-option active" onclick="setLang('en','&#127468;&#127463;','EN',this)"><span class="lf">&#127468;&#127463;</span> English</button>
+          <button class="lang-option" onclick="setLang('es','&#127466;&#127480;','ES',this)"><span class="lf">&#127466;&#127480;</span> Espa&#241;ol</button>
+          <button class="lang-option" onclick="setLang('fr','&#127467;&#127479;','FR',this)"><span class="lf">&#127467;&#127479;</span> Fran&#231;ais</button>
+          <button class="lang-option" onclick="setLang('de','&#127465;&#127466;','DE',this)"><span class="lf">&#127465;&#127466;</span> Deutsch</button>
+          <button class="lang-option" onclick="setLang('nl','&#127475;&#127473;','NL',this)"><span class="lf">&#127475;&#127473;</span> Nederlands</button>
+          <button class="lang-option" onclick="setLang('ru','&#127479;&#127482;','RU',this)"><span class="lf">&#127479;&#127482;</span> &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button>
+          <button class="lang-option" onclick="setLang('ca','CA&#127988;','CA',this)"><span class="lf">&#127988;</span> Catal&#224;</button>
+          <button class="lang-option" onclick="setLang('ca','VAL&#127754;','VAL',this)"><span class="lf">&#127754;</span> Valenci&#224;</button>
+        </div>
+      </div>
+      <a href="index.html#download" class="btn btn-primary">Get the App</a>
+      <div class="hamburger" onclick="openMob()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ════════════════════════════════ -->
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <div class="tag white fu">✦ Our Story</div>
+    <h1 class="page-title fu">About Us</h1>
+    <p class="page-sub fu">We believe everyday shopping should be more rewarding — for customers and local businesses alike.</p>
+  </div>
+</section>
+
+<!-- ══ MISSION ══════════════════════════════════ -->
+<section id="mission">
+  <div class="mission-inner container">
+    <div class="mission-text">
+      <div class="tag fu">✦ Our Mission</div>
+      <h2 class="section-title fu">Connecting people with local businesses</h2>
+      <div class="fu">
+        <p>At Pinched, we believe everyday shopping should be more rewarding — for both customers and local businesses.</p>
+        <p>Our app connects people with the best promotions from neighbourhood shops, cafés, and venues. Every time you visit, you collect <strong>Pinched Points</strong> that can be turned into real rewards. For businesses, it's a completely free way to showcase offers, attract new customers, and build loyalty with the community.</p>
+        <p>We're passionate about supporting local. By helping people discover hidden gems in their own towns — and when travelling — we make it easier to shop small, save money, and keep communities thriving.</p>
+        <p>Pinched isn't just another points system. It's a platform built around <strong>connection</strong>: between customers who want value, and businesses that want to grow.</p>
+        <p><strong>Join us today</strong> — support local, get rewarded, and be part of the Pinched community.</p>
+      </div>
+    </div>
+    <div class="mission-visual fu">
+      <img src="Lobster welcome.png" alt="Welcome to Pinched" class="mission-lobster" />
+    </div>
+  </div>
+</section>
+
+<!-- ══ VALUES ═══════════════════════════════════ -->
+<section id="values">
+  <div class="values-inner container">
+    <div style="text-align:center;">
+      <div class="tag fu">✦ What We Stand For</div>
+      <h2 class="section-title fu" style="margin:0 auto 14px;">Built on three principles</h2>
+      <p class="section-sub fu" style="margin:0 auto;">Everything we build at Pinched comes back to these core beliefs.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card fu">
+        <div class="value-ico">🏪</div>
+        <h3>Support Local</h3>
+        <p>We champion neighbourhood businesses and help them compete — giving them a free platform to reach more customers and build real loyalty.</p>
+      </div>
+      <div class="value-card gold-top fu" style="transition-delay:.15s">
+        <div class="value-ico">🎁</div>
+        <h3>Reward Every Visit</h3>
+        <p>Every time you walk through a door, you should get something back. Pinched Points make loyalty tangible and worth collecting.</p>
+      </div>
+      <div class="value-card fu" style="transition-delay:.3s">
+        <div class="value-ico">🌍</div>
+        <h3>No Barriers</h3>
+        <p>Free to download, free to use, available in 8 languages. Pinched is built for everyone — locals and travellers alike.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OUR STORY ═════════════════════════════════ -->
+<section id="story">
+  <div class="story-inner container">
+    <div style="text-align:center;">
+      <div class="tag white fu">✦ How It Began</div>
+      <h2 class="section-title white fu">Our Story</h2>
+    </div>
+    <div class="story-body fu">
+      <p>Pinched was born from a simple idea: <strong>shopping local should feel as rewarding as it does meaningful.</strong></p>
+      <p>We saw two challenges:</p>
+      <div class="challenges">
+        <div class="challenge">
+          <div class="challenge-num">1</div>
+          <span>Shoppers wanted better ways to discover deals and earn rewards from the businesses they already loved.</span>
+        </div>
+        <div class="challenge">
+          <div class="challenge-num">2</div>
+          <span>Local businesses needed a fair, affordable way to bring people through their doors and keep them coming back.</span>
+        </div>
+      </div>
+      <p>So we built Pinched — a platform that connects the two. <strong>No hidden fees, no complicated systems</strong>, just a straightforward way for customers to collect points and businesses to grow.</p>
+      <p>From day one, our goal has been to help communities thrive. Whether you're finding a new café in your hometown or exploring shops in a town you've never visited, Pinched makes every visit rewarding.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ═══════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner container">
+    <div class="tag fu" style="margin:0 auto 16px; display:table;">✦ Get In Touch</div>
+    <h2 class="section-title fu" style="text-align:center;">We'd love to hear from you</h2>
+    <p class="section-sub fu" style="margin:12px auto 0; text-align:center;">Have a question, feedback, or just want to say hello? Drop us an email and we'll get back to you as soon as possible.</p>
+    <div class="contact-card fu">
+      <p style="font-size:15px; color:var(--text-light); margin-bottom:20px;">Reach us directly at</p>
+      <a href="mailto:support@pinchedapp.com" class="contact-email">
+        <span>✉️</span> support@pinchedapp.com
+      </a>
+      <p class="contact-note">We aim to respond within 24–48 hours. For business enquiries, partnership requests, or general support — we're here to help.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-brand-logo">
+          <img src="logo.png" alt="Pinched" style="height:32px; width:auto; filter:brightness(0) invert(1);" />
+        </div>
+        <p class="ft-tagline">Discover promotions from local businesses, earn Pinched Points, and redeem rewards wherever you go.</p>
+        <div class="ft-social">
+          <a href="https://www.facebook.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="Facebook">f</a>
+          <a href="https://www.instagram.com/pinched.app" target="_blank" rel="noopener" class="social-a" title="Instagram">ig</a>
+          <a href="https://x.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="X / Twitter">x</a>
+          <a href="https://tiktok.com/@pinchedapp" target="_blank" rel="noopener" class="social-a" title="TikTok">tk</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>App</h4>
+        <ul>
+          <li><a href="index.html#how">How It Works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#cats">Categories</a></li>
+          <li><a href="index.html#rewards">Points &amp; Rewards</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Business</h4>
+        <ul>
+          <li><a href="index.html#biz">Register Free</a></li>
+          <li><a href="index.html#biz">Post Promotions</a></li>
+          <li><a href="index.html#biz">QR Rewards</a></li>
+          <li><a href="index.html#biz">Analytics</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 Pinched. All rights reserved.</span>
+      <div class="ft-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="mailto:support@pinchedapp.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  function openMob()  { document.getElementById('mobMenu').classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+</script>
+
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+  /* ── Google Translate ── */
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en', autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+
+  function toggleLang() { document.getElementById('langSelector').classList.toggle('open'); }
+  function closeLang()  { document.getElementById('langSelector').classList.remove('open'); }
+
+  /* Write / clear the googtrans cookie that GT reads on each page load */
+  function gtCookie(val) {
+    var exp = val
+      ? new Date(Date.now() + 365*24*60*60*1000).toUTCString()
+      : 'Thu, 01 Jan 1970 00:00:00 UTC';
+    document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp + '; path=/';
+    try {
+      document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp
+                      + '; path=/; domain=.' + location.hostname;
+    } catch(e) {}
+  }
+
+  function setLang(code, flag, lbl, btn) {
+    document.querySelectorAll('.lang-option').forEach(function(o){ o.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('currentFlag').textContent = flag;
+    document.getElementById('currentLangLabel').textContent = lbl;
+    closeLang();
+    if (code === 'en') {
+      localStorage.removeItem('pinchedLang');
+      localStorage.removeItem('pinchedLangFlag');
+      localStorage.removeItem('pinchedLangLabel');
+      gtCookie('');                          /* clear cookie */
+    } else {
+      localStorage.setItem('pinchedLang',      code);
+      localStorage.setItem('pinchedLangFlag',  flag);
+      localStorage.setItem('pinchedLangLabel', lbl);
+      gtCookie('/en/' + code);              /* set cookie */
+    }
+    /* Remove any stale hash then force a hard reload so GT re-reads the cookie */
+    history.replaceState(null, '', location.pathname + location.search);
+    location.reload(true);
+  }
+
+  /* Restore UI labels and keep the cookie alive across page navigations */
+  window.addEventListener('load', function() {
+    var flag = localStorage.getItem('pinchedLangFlag');
+    var lbl  = localStorage.getItem('pinchedLangLabel');
+    var code = localStorage.getItem('pinchedLang');
+    if (flag) document.getElementById('currentFlag').textContent  = flag;
+    if (lbl)  document.getElementById('currentLangLabel').textContent = lbl;
+    if (code) {
+      document.querySelectorAll('.lang-option').forEach(function(b) {
+        var oc = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', oc.indexOf("'" + code + "'") !== -1);
+      });
+      /* Re-stamp cookie if it got lost during navigation */
+      if (code !== 'en' && document.cookie.indexOf('googtrans=') === -1) {
+        gtCookie('/en/' + code);
+      }
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#langSelector')) closeLang();
+  });
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

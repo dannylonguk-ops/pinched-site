@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessibility Statement — Pinched</title>
+  <meta name="description" content="Pinched Accessibility Statement — our commitment to making the app accessible to everyone." />
+  <link rel="icon" href="Favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --tiffany:       #0ABAB5;
+      --tiffany-dark:  #089490;
+      --tiffany-light: #E6F9F8;
+      --gold:          #E8B84B;
+      --dark:          #067370;
+      --dark-alt:      #089490;
+      --text:          #1A1A2E;
+      --text-light:    #555;
+      --text-muted:    #999;
+      --white:         #ffffff;
+      --bg:            #F4F9F9;
+      --radius:        16px;
+      --shadow:        0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg:     0 12px 48px rgba(0,0,0,0.14);
+      --transition:    0.3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 6px 14px;
+      border-radius: 99px; margin-bottom: 16px;
+    }
+    .tag.white { color: rgba(255,255,255,.9); background: rgba(255,255,255,.12); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px;
+      padding: 13px 26px; border-radius: 12px; border: none;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-primary { background: var(--tiffany); color: white; }
+    .btn-primary:hover { background: var(--tiffany-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.35); }
+
+    .fu { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── NAVBAR ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000; padding: 0 24px; transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 700; color: rgba(255,255,255,.85); transition: var(--transition); }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--tiffany) !important; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: white; display: block; transition: var(--transition); border-radius: 2px; }
+    nav.scrolled .hamburger span { background: var(--text); }
+
+    /* ── MOBILE MENU ─────────────────────────────── */
+    .mob-menu {
+      position: fixed; inset: 0; background: var(--dark); z-index: 999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 36px;
+      transform: translateX(100%); transition: transform .35s ease;
+    }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-size: 22px; font-weight: 800; color: white; transition: var(--transition); }
+    .mob-menu a:hover { color: var(--tiffany); }
+    .mob-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+
+    /* ── PAGE HERO ───────────────────────────────── */
+    #page-hero {
+      background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%);
+      padding: 140px 24px 90px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #page-hero::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .page-title {
+      font-size: clamp(34px, 5.5vw, 66px); font-weight: 900;
+      color: var(--white); line-height: 1.08; margin-bottom: 20px;
+    }
+    .page-sub {
+      font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.7;
+      max-width: 500px; margin: 0 auto;
+    }
+
+    /* ── CONTENT ─────────────────────────────────── */
+    #content { padding: 80px 24px 96px; background: var(--bg); }
+    .content-inner { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+    /* Statement cards */
+    .a11y-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 36px 40px; box-shadow: var(--shadow);
+      border-left: 4px solid transparent; transition: var(--transition);
+    }
+    .a11y-card:hover { border-left-color: var(--tiffany); }
+    .a11y-card.gold-border { border-left-color: var(--gold); }
+
+    .card-ico {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: var(--tiffany-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .card-ico.gold-bg { background: rgba(232,184,75,.12); }
+
+    .a11y-card h2 {
+      font-size: 21px; font-weight: 900; color: var(--text); margin-bottom: 14px;
+    }
+    .a11y-card p {
+      font-size: 15px; color: var(--text-light); line-height: 1.8; margin-bottom: 12px;
+    }
+    .a11y-card p:last-child { margin-bottom: 0; }
+
+    .feature-pills {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px;
+    }
+    .feature-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--tiffany-light); color: var(--tiffany-dark);
+      font-size: 13px; font-weight: 800; padding: 8px 14px;
+      border-radius: 99px;
+    }
+    .feature-pill span { font-size: 15px; }
+
+    .email-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 800; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 12px 20px;
+      border-radius: 12px; transition: var(--transition); margin-top: 14px;
+    }
+    .email-link:hover { background: var(--tiffany); color: white; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.3); }
+
+    .feedback-note {
+      margin-top: 18px; font-size: 14px; font-weight: 700;
+      color: var(--tiffany-dark); background: var(--tiffany-light);
+      padding: 14px 18px; border-radius: 10px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .feedback-note span { font-size: 17px; flex-shrink: 0; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--dark); padding: 60px 24px 28px; }
+    .ft-inner { max-width: 1140px; margin: 0 auto; }
+    .ft-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
+      padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 28px;
+    }
+    .ft-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ft-tagline { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; margin-bottom: 22px; }
+    .ft-social { display: flex; gap: 9px; }
+    .social-a {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); font-size: 13px; font-weight: 800;
+      transition: var(--transition);
+    }
+    .social-a:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+    .ft-col h4 { font-size: 12px; font-weight: 800; color: white; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 16px; }
+    .ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .ft-col ul a { font-size: 14px; color: rgba(255,255,255,.4); font-weight: 600; transition: var(--transition); }
+    .ft-col ul a:hover { color: var(--tiffany); }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .ft-copy   { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; }
+    .ft-links  { display: flex; gap: 22px; }
+    .ft-links a { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; transition: var(--transition); }
+    .ft-links a:hover { color: var(--tiffany); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .ft-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .a11y-card { padding: 26px 24px; }
+      .ft-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .ft-top { grid-template-columns: 1fr; }
+      .feature-pills { flex-direction: column; }
+    }
+
+    /* ── Language Selector ─────────────────────── */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .goog-te-gadget { display: none !important; }
+    body { top: 0 !important; }
+    .lang-selector { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22);
+      color: white; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800;
+      padding: 7px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition);
+    }
+    nav.scrolled .lang-btn { background: var(--bg); border-color: #ddd; color: var(--text); }
+    nav.scrolled .lang-btn:hover { background: var(--tiffany-light); border-color: var(--tiffany); color: var(--tiffany); }
+    .lang-btn svg { transition: transform var(--transition); }
+    .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: white; border-radius: 14px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18); min-width: 172px;
+      display: none; flex-direction: column; gap: 2px;
+      z-index: 9999; border: 1px solid rgba(0,0,0,.06);
+    }
+    .lang-selector.open .lang-dropdown { display: flex; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: none; font-family: 'Nunito', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+      padding: 9px 12px; border-radius: 9px; cursor: pointer;
+      transition: var(--transition); text-align: left; width: 100%;
+    }
+    .lang-option:hover  { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option.active { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option .lf { font-size: 17px; line-height: 1; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══ MOBILE MENU ══════════════════════════════ -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="index.html#how" onclick="closeMob()">How It Works</a>
+  <a href="index.html#features" onclick="closeMob()">Features</a>
+  <a href="index.html#biz" onclick="closeMob()">For Businesses</a>
+  <a href="index.html#download" onclick="closeMob()">Download</a>
+</div>
+
+<!-- ══ NAVBAR ══════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Pinched" style="height:38px; width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#biz">For Businesses</a></li>
+      <li><a href="index.html#multi">Languages</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+          <span id="currentFlag">&#127468;&#127463;</span>
+          <span id="currentLangLabel">EN</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown">
+          <button class="lang-option active" onclick="setLang('en','&#127468;&#127463;','EN',this)"><span class="lf">&#127468;&#127463;</span> English</button>
+          <button class="lang-option" onclick="setLang('es','&#127466;&#127480;','ES',this)"><span class="lf">&#127466;&#127480;</span> Espa&#241;ol</button>
+          <button class="lang-option" onclick="setLang('fr','&#127467;&#127479;','FR',this)"><span class="lf">&#127467;&#127479;</span> Fran&#231;ais</button>
+          <button class="lang-option" onclick="setLang('de','&#127465;&#127466;','DE',this)"><span class="lf">&#127465;&#127466;</span> Deutsch</button>
+          <button class="lang-option" onclick="setLang('nl','&#127475;&#127473;','NL',this)"><span class="lf">&#127475;&#127473;</span> Nederlands</button>
+          <button class="lang-option" onclick="setLang('ru','&#127479;&#127482;','RU',this)"><span class="lf">&#127479;&#127482;</span> &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button>
+          <button class="lang-option" onclick="setLang('ca','CA&#127988;','CA',this)"><span class="lf">&#127988;</span> Catal&#224;</button>
+          <button class="lang-option" onclick="setLang('ca','VAL&#127754;','VAL',this)"><span class="lf">&#127754;</span> Valenci&#224;</button>
+        </div>
+      </div>
+      <a href="index.html#download" class="btn btn-primary">Get the App</a>
+      <div class="hamburger" onclick="openMob()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ════════════════════════════════ -->
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <div class="tag white fu">✦ Legal</div>
+    <h1 class="page-title fu">Accessibility Statement</h1>
+    <p class="page-sub fu">Last updated: 13 October 2025</p>
+  </div>
+</section>
+
+<!-- ══ CONTENT ══════════════════════════════════ -->
+<section id="content">
+  <div class="content-inner container">
+
+    <div class="a11y-card gold-border fu">
+      <div class="card-ico gold-bg">♿</div>
+      <h2>Our Commitment</h2>
+      <p>Pinched is committed to ensuring that our app and services are accessible to as many people as possible.</p>
+      <p>We design Pinched with accessibility in mind, aiming to support features such as text scaling, screen readers, and clear colour contrasts. We follow recognised accessibility guidelines where possible and continuously improve based on feedback.</p>
+      <div class="feature-pills">
+        <div class="feature-pill"><span>🔤</span> Text Scaling</div>
+        <div class="feature-pill"><span>📢</span> Screen Reader Support</div>
+        <div class="feature-pill"><span>🎨</span> Clear Colour Contrast</div>
+        <div class="feature-pill"><span>📱</span> Cross-device Support</div>
+      </div>
+    </div>
+
+    <div class="a11y-card fu">
+      <div class="card-ico">🔧</div>
+      <h2>Ongoing Improvements</h2>
+      <p>Accessibility is an ongoing effort. As Pinched develops, we are working to expand support for additional accessibility features across devices.</p>
+      <p>We review our app regularly and welcome input from users to help us identify and fix barriers as quickly as possible.</p>
+    </div>
+
+    <div class="a11y-card fu">
+      <div class="card-ico">💬</div>
+      <h2>Feedback</h2>
+      <p>If you encounter an accessibility barrier while using Pinched, please let us know. Your feedback helps us make Pinched better for everyone.</p>
+      <a href="mailto:support@pinchedapp.com" class="email-link">✉️ support@pinchedapp.com</a>
+      <div class="feedback-note">
+        <span>💡</span>
+        We aim to respond to all accessibility feedback within 48 hours and will work to address issues as a priority.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-brand-logo">
+          <img src="logo.png" alt="Pinched" style="height:32px; width:auto; filter:brightness(0) invert(1);" />
+        </div>
+        <p class="ft-tagline">Discover promotions from local businesses, earn Pinched Points, and redeem rewards wherever you go.</p>
+        <div class="ft-social">
+          <a href="https://www.facebook.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="Facebook">f</a>
+          <a href="https://www.instagram.com/pinched.app" target="_blank" rel="noopener" class="social-a" title="Instagram">ig</a>
+          <a href="https://x.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="X / Twitter">x</a>
+          <a href="https://tiktok.com/@pinchedapp" target="_blank" rel="noopener" class="social-a" title="TikTok">tk</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>App</h4>
+        <ul>
+          <li><a href="index.html#how">How It Works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#cats">Categories</a></li>
+          <li><a href="index.html#rewards">Points &amp; Rewards</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Business</h4>
+        <ul>
+          <li><a href="index.html#biz">Register Free</a></li>
+          <li><a href="index.html#biz">Post Promotions</a></li>
+          <li><a href="index.html#biz">QR Rewards</a></li>
+          <li><a href="index.html#biz">Analytics</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 Pinched. All rights reserved.</span>
+      <div class="ft-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  function openMob()  { document.getElementById('mobMenu').classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+</script>
+
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+  /* ── Google Translate ── */
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en', autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+
+  function toggleLang() { document.getElementById('langSelector').classList.toggle('open'); }
+  function closeLang()  { document.getElementById('langSelector').classList.remove('open'); }
+
+  /* Write / clear the googtrans cookie that GT reads on each page load */
+  function gtCookie(val) {
+    var exp = val
+      ? new Date(Date.now() + 365*24*60*60*1000).toUTCString()
+      : 'Thu, 01 Jan 1970 00:00:00 UTC';
+    document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp + '; path=/';
+    try {
+      document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp
+                      + '; path=/; domain=.' + location.hostname;
+    } catch(e) {}
+  }
+
+  function setLang(code, flag, lbl, btn) {
+    document.querySelectorAll('.lang-option').forEach(function(o){ o.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('currentFlag').textContent = flag;
+    document.getElementById('currentLangLabel').textContent = lbl;
+    closeLang();
+    if (code === 'en') {
+      localStorage.removeItem('pinchedLang');
+      localStorage.removeItem('pinchedLangFlag');
+      localStorage.removeItem('pinchedLangLabel');
+      gtCookie('');                          /* clear cookie */
+    } else {
+      localStorage.setItem('pinchedLang',      code);
+      localStorage.setItem('pinchedLangFlag',  flag);
+      localStorage.setItem('pinchedLangLabel', lbl);
+      gtCookie('/en/' + code);              /* set cookie */
+    }
+    /* Remove any stale hash then force a hard reload so GT re-reads the cookie */
+    history.replaceState(null, '', location.pathname + location.search);
+    location.reload(true);
+  }
+
+  /* Restore UI labels and keep the cookie alive across page navigations */
+  window.addEventListener('load', function() {
+    var flag = localStorage.getItem('pinchedLangFlag');
+    var lbl  = localStorage.getItem('pinchedLangLabel');
+    var code = localStorage.getItem('pinchedLang');
+    if (flag) document.getElementById('currentFlag').textContent  = flag;
+    if (lbl)  document.getElementById('currentLangLabel').textContent = lbl;
+    if (code) {
+      document.querySelectorAll('.lang-option').forEach(function(b) {
+        var oc = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', oc.indexOf("'" + code + "'") !== -1);
+      });
+      /* Re-stamp cookie if it got lost during navigation */
+      if (code !== 'en' && document.cookie.indexOf('googtrans=') === -1) {
+        gtCookie('/en/' + code);
+      }
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#langSelector')) closeLang();
+  });
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

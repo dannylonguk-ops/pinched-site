@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Pinched</title>
+  <meta name="description" content="Pinched Privacy Policy — how we collect, use, and protect your personal data." />
+  <link rel="icon" href="Favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --tiffany:       #0ABAB5;
+      --tiffany-dark:  #089490;
+      --tiffany-light: #E6F9F8;
+      --gold:          #E8B84B;
+      --dark:          #067370;
+      --dark-alt:      #089490;
+      --text:          #1A1A2E;
+      --text-light:    #555;
+      --text-muted:    #999;
+      --white:         #ffffff;
+      --bg:            #F4F9F9;
+      --radius:        16px;
+      --shadow:        0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg:     0 12px 48px rgba(0,0,0,0.14);
+      --transition:    0.3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 6px 14px;
+      border-radius: 99px; margin-bottom: 16px;
+    }
+    .tag.white { color: rgba(255,255,255,.9); background: rgba(255,255,255,.12); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px;
+      padding: 13px 26px; border-radius: 12px; border: none;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-primary { background: var(--tiffany); color: white; }
+    .btn-primary:hover { background: var(--tiffany-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.35); }
+
+    .fu { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── NAVBAR ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000; padding: 0 24px; transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 700; color: rgba(255,255,255,.85); transition: var(--transition); }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--tiffany) !important; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: white; display: block; transition: var(--transition); border-radius: 2px; }
+    nav.scrolled .hamburger span { background: var(--text); }
+
+    /* ── MOBILE MENU ─────────────────────────────── */
+    .mob-menu {
+      position: fixed; inset: 0; background: var(--dark); z-index: 999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 36px;
+      transform: translateX(100%); transition: transform .35s ease;
+    }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-size: 22px; font-weight: 800; color: white; transition: var(--transition); }
+    .mob-menu a:hover { color: var(--tiffany); }
+    .mob-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+
+    /* ── PAGE HERO ───────────────────────────────── */
+    #page-hero {
+      background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%);
+      padding: 140px 24px 90px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #page-hero::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #page-hero::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .page-title {
+      font-size: clamp(40px, 6vw, 72px); font-weight: 900;
+      color: var(--white); line-height: 1.08; margin-bottom: 20px;
+    }
+    .page-sub {
+      font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.7;
+      max-width: 500px; margin: 0 auto;
+    }
+
+    /* ── POLICY BODY ─────────────────────────────── */
+    #policy { padding: 80px 24px 96px; background: var(--bg); }
+    .policy-layout {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 220px 1fr; gap: 56px; align-items: start;
+    }
+
+    /* Sticky sidebar nav */
+    .policy-nav {
+      position: sticky; top: 90px;
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 20px; box-shadow: var(--shadow);
+    }
+    .policy-nav h4 {
+      font-size: 11px; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px;
+    }
+    .policy-nav ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .policy-nav ul a {
+      display: block; font-size: 13px; font-weight: 700; color: var(--text-light);
+      padding: 7px 10px; border-radius: 8px; transition: var(--transition);
+    }
+    .policy-nav ul a:hover { background: var(--tiffany-light); color: var(--tiffany); }
+    .policy-nav ul a.active { background: var(--tiffany-light); color: var(--tiffany); }
+
+    /* Sections */
+    .policy-content { display: flex; flex-direction: column; gap: 20px; }
+
+    .policy-section {
+      background: var(--white); border-radius: var(--radius);
+      padding: 36px 36px; box-shadow: var(--shadow);
+      border-left: 4px solid transparent; transition: var(--transition);
+    }
+    .policy-section:hover { border-left-color: var(--tiffany); }
+
+    .section-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--tiffany-light); color: var(--tiffany);
+      font-size: 13px; font-weight: 900; margin-bottom: 14px;
+    }
+
+    .policy-section h2 {
+      font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 16px;
+    }
+
+    .policy-section p {
+      font-size: 15px; color: var(--text-light); line-height: 1.8; margin-bottom: 14px;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    .policy-section ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+      margin: 4px 0 14px;
+    }
+    .policy-section ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 15px; color: var(--text-light); line-height: 1.6;
+    }
+    .policy-section ul li::before {
+      content: ''; display: block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--tiffany); flex-shrink: 0; margin-top: 8px;
+    }
+    .policy-section ul li strong { color: var(--text); }
+
+    .policy-section .highlight {
+      background: var(--tiffany-light); border-radius: 10px;
+      padding: 14px 18px; font-size: 14px; font-weight: 700;
+      color: var(--tiffany-dark); margin-top: 14px; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .policy-section .highlight span { font-size: 17px; flex-shrink: 0; }
+
+    .policy-section .warning {
+      background: rgba(232,184,75,.1); border-radius: 10px;
+      padding: 14px 18px; font-size: 14px; font-weight: 700;
+      color: #9a7200; margin-top: 14px; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .policy-section .warning span { font-size: 17px; flex-shrink: 0; }
+
+    .email-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 800; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 11px 18px;
+      border-radius: 10px; transition: var(--transition); margin-top: 6px;
+    }
+    .email-link:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--dark); padding: 60px 24px 28px; }
+    .ft-inner { max-width: 1140px; margin: 0 auto; }
+    .ft-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
+      padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 28px;
+    }
+    .ft-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ft-tagline { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; margin-bottom: 22px; }
+    .ft-social { display: flex; gap: 9px; }
+    .social-a {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); font-size: 13px; font-weight: 800;
+      transition: var(--transition);
+    }
+    .social-a:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+    .ft-col h4 { font-size: 12px; font-weight: 800; color: white; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 16px; }
+    .ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .ft-col ul a { font-size: 14px; color: rgba(255,255,255,.4); font-weight: 600; transition: var(--transition); }
+    .ft-col ul a:hover { color: var(--tiffany); }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .ft-copy   { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; }
+    .ft-links  { display: flex; gap: 22px; }
+    .ft-links a { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; transition: var(--transition); }
+    .ft-links a:hover { color: var(--tiffany); }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 1024px) {
+      .ft-top { grid-template-columns: 1fr 1fr; }
+      .policy-layout { grid-template-columns: 1fr; }
+      .policy-nav { position: static; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .policy-section { padding: 26px 22px; }
+      .ft-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .ft-top { grid-template-columns: 1fr; }
+    }
+
+    /* ── Language Selector ─────────────────────── */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .goog-te-gadget { display: none !important; }
+    body { top: 0 !important; }
+    .lang-selector { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22);
+      color: white; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800;
+      padding: 7px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition);
+    }
+    nav.scrolled .lang-btn { background: var(--bg); border-color: #ddd; color: var(--text); }
+    nav.scrolled .lang-btn:hover { background: var(--tiffany-light); border-color: var(--tiffany); color: var(--tiffany); }
+    .lang-btn svg { transition: transform var(--transition); }
+    .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: white; border-radius: 14px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18); min-width: 172px;
+      display: none; flex-direction: column; gap: 2px;
+      z-index: 9999; border: 1px solid rgba(0,0,0,.06);
+    }
+    .lang-selector.open .lang-dropdown { display: flex; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: none; font-family: 'Nunito', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+      padding: 9px 12px; border-radius: 9px; cursor: pointer;
+      transition: var(--transition); text-align: left; width: 100%;
+    }
+    .lang-option:hover  { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option.active { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option .lf { font-size: 17px; line-height: 1; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══ MOBILE MENU ══════════════════════════════ -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="index.html#how" onclick="closeMob()">How It Works</a>
+  <a href="index.html#features" onclick="closeMob()">Features</a>
+  <a href="index.html#biz" onclick="closeMob()">For Businesses</a>
+  <a href="index.html#download" onclick="closeMob()">Download</a>
+</div>
+
+<!-- ══ NAVBAR ══════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logo.png" alt="Pinched" style="height:38px; width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#how">How It Works</a></li>
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="index.html#biz">For Businesses</a></li>
+      <li><a href="index.html#multi">Languages</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+          <span id="currentFlag">&#127468;&#127463;</span>
+          <span id="currentLangLabel">EN</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown">
+          <button class="lang-option active" onclick="setLang('en','&#127468;&#127463;','EN',this)"><span class="lf">&#127468;&#127463;</span> English</button>
+          <button class="lang-option" onclick="setLang('es','&#127466;&#127480;','ES',this)"><span class="lf">&#127466;&#127480;</span> Espa&#241;ol</button>
+          <button class="lang-option" onclick="setLang('fr','&#127467;&#127479;','FR',this)"><span class="lf">&#127467;&#127479;</span> Fran&#231;ais</button>
+          <button class="lang-option" onclick="setLang('de','&#127465;&#127466;','DE',this)"><span class="lf">&#127465;&#127466;</span> Deutsch</button>
+          <button class="lang-option" onclick="setLang('nl','&#127475;&#127473;','NL',this)"><span class="lf">&#127475;&#127473;</span> Nederlands</button>
+          <button class="lang-option" onclick="setLang('ru','&#127479;&#127482;','RU',this)"><span class="lf">&#127479;&#127482;</span> &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button>
+          <button class="lang-option" onclick="setLang('ca','CA&#127988;','CA',this)"><span class="lf">&#127988;</span> Catal&#224;</button>
+          <button class="lang-option" onclick="setLang('ca','VAL&#127754;','VAL',this)"><span class="lf">&#127754;</span> Valenci&#224;</button>
+        </div>
+      </div>
+      <a href="index.html#download" class="btn btn-primary">Get the App</a>
+      <div class="hamburger" onclick="openMob()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ════════════════════════════════ -->
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <div class="tag white fu">✦ Legal</div>
+    <h1 class="page-title fu">Privacy Policy</h1>
+    <p class="page-sub fu">Effective Date: 15 October 2025</p>
+  </div>
+</section>
+
+<!-- ══ POLICY BODY ══════════════════════════════ -->
+<section id="policy">
+  <div class="policy-layout container">
+
+    <!-- Sidebar nav -->
+    <nav class="policy-nav fu">
+      <h4>Contents</h4>
+      <ul>
+        <li><a href="#s1">1. Information We Collect</a></li>
+        <li><a href="#s2">2. How We Use It</a></li>
+        <li><a href="#s3">3. Sharing of Information</a></li>
+        <li><a href="#s4">4. Your Rights</a></li>
+        <li><a href="#s5">5. Data Retention</a></li>
+        <li><a href="#s6">6. Security</a></li>
+        <li><a href="#s7">7. Policy Changes</a></li>
+        <li><a href="#s8">8. Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <!-- Content -->
+    <div class="policy-content">
+
+      <div class="policy-section fu" id="s1">
+        <div class="section-num">1</div>
+        <h2>Information We Collect</h2>
+        <p>We collect the following types of personal data when you use Pinched:</p>
+        <ul>
+          <li><strong>Account details:</strong> name, username, email.</li>
+          <li><strong>Profile information:</strong> photo, business name, or bio (optional).</li>
+          <li><strong>Contact details:</strong> email address or phone number for support or recovery.</li>
+          <li><strong>Location data:</strong> used to show nearby discounts and promotions (only when enabled).</li>
+          <li><strong>Activity data:</strong> posts you interact with, businesses you follow, reviews you write, offers you save.</li>
+          <li><strong>Device and analytics data:</strong> IP address, device identifiers, usage statistics.</li>
+        </ul>
+      </div>
+
+      <div class="policy-section fu" id="s2">
+        <div class="section-num">2</div>
+        <h2>How We Use Your Information</h2>
+        <p>We use your information to provide and improve Pinched, personalise your experience, connect you with local businesses and promotions, send relevant updates, ensure security, and comply with legal obligations.</p>
+        <div class="highlight">
+          <span>🔒</span>
+          We never sell your personal data.
+        </div>
+      </div>
+
+      <div class="policy-section fu" id="s3">
+        <div class="section-num">3</div>
+        <h2>Sharing of Information</h2>
+        <p>We may share limited information with:</p>
+        <ul>
+          <li><strong>Businesses you interact with</strong> (e.g., to confirm visits and rewards).</li>
+          <li><strong>Service providers</strong> who help us operate the App.</li>
+          <li><strong>Legal authorities,</strong> if required by law.</li>
+        </ul>
+        <div class="highlight">
+          <span>✅</span>
+          We do not share your data with third parties for advertising without your consent.
+        </div>
+      </div>
+
+      <div class="policy-section fu" id="s4">
+        <div class="section-num">4</div>
+        <h2>Your Choices &amp; Rights</h2>
+        <p>You can:</p>
+        <ul>
+          <li>Update your account information anytime.</li>
+          <li>Manage notifications and location preferences.</li>
+          <li>Request access to or deletion of your data.</li>
+          <li>Request a copy of your data.</li>
+          <li>Restrict or object to certain types of processing.</li>
+        </ul>
+        <p>Contact us at <a href="mailto:support@pinchedapp.com" class="email-link">✉️ support@pinchedapp.com</a> to exercise these rights.</p>
+      </div>
+
+      <div class="policy-section fu" id="s5">
+        <div class="section-num">5</div>
+        <h2>Data Retention</h2>
+        <p>We keep your data only as long as needed to provide services, comply with legal obligations, or resolve disputes. If you delete your account, we securely delete or anonymise your data unless required otherwise by law.</p>
+      </div>
+
+      <div class="policy-section fu" id="s6">
+        <div class="section-num">6</div>
+        <h2>Security</h2>
+        <p>We use technical and organisational measures such as encryption and access controls to protect your data.</p>
+        <div class="warning">
+          <span>⚠️</span>
+          No system is 100% secure. Please use strong passwords and keep your login details safe.
+        </div>
+      </div>
+
+      <div class="policy-section fu" id="s7">
+        <div class="section-num">7</div>
+        <h2>Changes to this Policy</h2>
+        <p>We may update this Privacy Policy to reflect changes in our practices. If significant changes are made, we will notify you in the App or via email. Continued use of Pinched after updates means you accept the new policy.</p>
+      </div>
+
+      <div class="policy-section fu" id="s8">
+        <div class="section-num">8</div>
+        <h2>Contact Us</h2>
+        <p>If you have questions about this Privacy Policy, please contact us:</p>
+        <a href="mailto:support@pinchedapp.com" class="email-link">✉️ support@pinchedapp.com</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-brand-logo">
+          <img src="logo.png" alt="Pinched" style="height:32px; width:auto; filter:brightness(0) invert(1);" />
+        </div>
+        <p class="ft-tagline">Discover promotions from local businesses, earn Pinched Points, and redeem rewards wherever you go.</p>
+        <div class="ft-social">
+          <a href="https://www.facebook.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="Facebook">f</a>
+          <a href="https://www.instagram.com/pinched.app" target="_blank" rel="noopener" class="social-a" title="Instagram">ig</a>
+          <a href="https://x.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="X / Twitter">x</a>
+          <a href="https://tiktok.com/@pinchedapp" target="_blank" rel="noopener" class="social-a" title="TikTok">tk</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>App</h4>
+        <ul>
+          <li><a href="index.html#how">How It Works</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#cats">Categories</a></li>
+          <li><a href="index.html#rewards">Points &amp; Rewards</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Business</h4>
+        <ul>
+          <li><a href="index.html#biz">Register Free</a></li>
+          <li><a href="index.html#biz">Post Promotions</a></li>
+          <li><a href="index.html#biz">QR Rewards</a></li>
+          <li><a href="index.html#biz">Analytics</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 Pinched. All rights reserved.</span>
+      <div class="ft-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  function openMob()  { document.getElementById('mobMenu').classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+
+  // Highlight active sidebar link on scroll
+  const sections = document.querySelectorAll('.policy-section');
+  const navLinks = document.querySelectorAll('.policy-nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+  /* ── Google Translate ── */
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en', autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+
+  function toggleLang() { document.getElementById('langSelector').classList.toggle('open'); }
+  function closeLang()  { document.getElementById('langSelector').classList.remove('open'); }
+
+  /* Write / clear the googtrans cookie that GT reads on each page load */
+  function gtCookie(val) {
+    var exp = val
+      ? new Date(Date.now() + 365*24*60*60*1000).toUTCString()
+      : 'Thu, 01 Jan 1970 00:00:00 UTC';
+    document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp + '; path=/';
+    try {
+      document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp
+                      + '; path=/; domain=.' + location.hostname;
+    } catch(e) {}
+  }
+
+  function setLang(code, flag, lbl, btn) {
+    document.querySelectorAll('.lang-option').forEach(function(o){ o.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('currentFlag').textContent = flag;
+    document.getElementById('currentLangLabel').textContent = lbl;
+    closeLang();
+    if (code === 'en') {
+      localStorage.removeItem('pinchedLang');
+      localStorage.removeItem('pinchedLangFlag');
+      localStorage.removeItem('pinchedLangLabel');
+      gtCookie('');                          /* clear cookie */
+    } else {
+      localStorage.setItem('pinchedLang',      code);
+      localStorage.setItem('pinchedLangFlag',  flag);
+      localStorage.setItem('pinchedLangLabel', lbl);
+      gtCookie('/en/' + code);              /* set cookie */
+    }
+    /* Remove any stale hash then force a hard reload so GT re-reads the cookie */
+    history.replaceState(null, '', location.pathname + location.search);
+    location.reload(true);
+  }
+
+  /* Restore UI labels and keep the cookie alive across page navigations */
+  window.addEventListener('load', function() {
+    var flag = localStorage.getItem('pinchedLangFlag');
+    var lbl  = localStorage.getItem('pinchedLangLabel');
+    var code = localStorage.getItem('pinchedLang');
+    if (flag) document.getElementById('currentFlag').textContent  = flag;
+    if (lbl)  document.getElementById('currentLangLabel').textContent = lbl;
+    if (code) {
+      document.querySelectorAll('.lang-option').forEach(function(b) {
+        var oc = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', oc.indexOf("'" + code + "'") !== -1);
+      });
+      /* Re-stamp cookie if it got lost during navigation */
+      if (code !== 'en' && document.cookie.indexOf('googtrans=') === -1) {
+        gtCookie('/en/' + code);
+      }
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#langSelector')) closeLang();
+  });
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

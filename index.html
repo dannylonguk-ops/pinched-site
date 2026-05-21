@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pinched — Discover Local Promotions & Earn Rewards</title>
+  <meta name="description" content="Discover promotions from local businesses, earn Pinched Points with every visit, and redeem rewards where you shop. Available on iOS and Android." />
+  <link rel="icon" href="Favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ─────────────────────────────── */
+    :root {
+      --tiffany:       #0ABAB5;
+      --tiffany-dark:  #089490;
+      --tiffany-light: #E6F9F8;
+      --gold:          #E8B84B;
+      --dark:          #067370;
+      --dark-alt:      #089490;
+      --dark-card:     #078582;
+      --text:          #1A1A2E;
+      --text-light:    #666;
+      --text-muted:    #999;
+      --white:         #ffffff;
+      --bg:            #F4F9F9;
+      --radius:        16px;
+      --radius-sm:     10px;
+      --shadow:        0 4px 24px rgba(0,0,0,0.07);
+      --shadow-lg:     0 12px 48px rgba(0,0,0,0.14);
+      --transition:    0.3s ease;
+    }
+
+    /* ── Reset ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Utilities ─────────────────────────────── */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--tiffany);
+      background: var(--tiffany-light); padding: 6px 14px;
+      border-radius: 99px; margin-bottom: 16px;
+    }
+    .tag.gold   { color: var(--gold);  background: rgba(232,184,75,.12); }
+    .tag.white  { color: rgba(255,255,255,.9); background: rgba(255,255,255,.12); }
+
+    h2.section-title {
+      font-size: clamp(26px, 4vw, 44px); font-weight: 900;
+      line-height: 1.15; color: var(--text); margin-bottom: 14px;
+    }
+    h2.section-title.white { color: var(--white); }
+
+    p.section-sub {
+      font-size: 17px; color: var(--text-light);
+      max-width: 560px; line-height: 1.7;
+    }
+    p.section-sub.white { color: rgba(255,255,255,.65); }
+
+    .section-hd { text-align: center; margin-bottom: 56px; }
+    .section-hd p.section-sub { margin: 0 auto; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 15px;
+      padding: 13px 26px; border-radius: 12px; border: none;
+      cursor: pointer; transition: var(--transition);
+    }
+    .btn-primary { background: var(--tiffany); color: white; }
+    .btn-primary:hover { background: var(--tiffany-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,186,181,.35); }
+    .btn-outline { background: transparent; color: var(--tiffany); border: 2px solid var(--tiffany); }
+    .btn-outline:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+
+    /* ── Scroll fade-up ────────────────────────── */
+    .fu { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .fu.vis { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000; padding: 0 24px; transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+    }
+    .nav-inner {
+      max-width: 1140px; margin: 0 auto; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { height: 34px; width: auto; }
+    .nav-logo-text { font-size: 21px; font-weight: 900; color: var(--tiffany); }
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a { font-size: 14px; font-weight: 700; color: rgba(255,255,255,.85); transition: var(--transition); }
+    nav.scrolled .nav-links a { color: var(--text); }
+    .nav-links a:hover { color: var(--tiffany) !important; opacity: 1; }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: white; display: block; transition: var(--transition); border-radius: 2px; }
+    nav.scrolled .hamburger span { background: var(--text); }
+
+    /* ═══════════════════════════════════════════
+       MOBILE MENU
+    ═══════════════════════════════════════════ */
+    .mob-menu {
+      position: fixed; inset: 0; background: var(--dark); z-index: 999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 36px;
+      transform: translateX(100%); transition: transform .35s ease;
+    }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-menu a { font-size: 22px; font-weight: 800; color: white; transition: var(--transition); }
+    .mob-menu a:hover { color: var(--tiffany); }
+    .mob-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: white; font-size: 28px; cursor: pointer; line-height: 1; }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 100px 24px 80px;
+    }
+    #hero::before {
+      content: ''; position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(10,186,181,.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: ''; position: absolute; bottom: -150px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,184,75,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.95); border: none;
+      color: var(--tiffany-dark); font-size: 13px; font-weight: 800;
+      padding: 8px 16px; border-radius: 99px; margin-bottom: 24px; letter-spacing: .4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.12);
+    }
+    .badge-dot {
+      width: 7px; height: 7px; background: var(--tiffany-dark); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(.75); }
+    }
+    .hero-title {
+      font-size: clamp(38px, 5.5vw, 66px); font-weight: 900;
+      line-height: 1.08; color: var(--white); margin-bottom: 22px;
+    }
+    .hero-title .hl  { color: var(--tiffany); }
+    .hero-title .gld { color: var(--gold); }
+    .hero-sub {
+      font-size: 18px; color: rgba(255,255,255,.62);
+      line-height: 1.7; margin-bottom: 38px; max-width: 460px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+
+    .store-badge {
+      height: 56px; width: auto; display: block;
+      transition: var(--transition);
+    }
+    .store-badge:hover { transform: translateY(-3px); opacity: .9; }
+
+    .store-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.18);
+      color: white; padding: 12px 20px; border-radius: 12px;
+      transition: var(--transition); backdrop-filter: blur(8px);
+    }
+    .store-btn:hover { background: rgba(255,255,255,.17); border-color: rgba(255,255,255,.3); transform: translateY(-2px); }
+    .store-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .sbt-text small  { display: block; font-size: 10px; opacity: .65; font-weight: 700; letter-spacing: .5px; }
+    .sbt-text strong { font-size: 16px; font-weight: 800; }
+
+    .hero-stats { display: flex; gap: 28px; }
+    .hs-item { display: flex; flex-direction: column; }
+    .hs-num { font-size: 22px; font-weight: 900; color: var(--white); line-height: 1.2; }
+    .hs-lbl { font-size: 11px; color: rgba(255,255,255,.45); font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
+
+    /* Hero visual */
+    .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    .hero-glow {
+      position: absolute; width: 820px; height: 820px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.22) 0%, transparent 65%);
+    }
+    .hero-lobster {
+      width: 820px; height: auto; position: relative; z-index: 2;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 20px 60px rgba(10,186,181,.28));
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-14px); }
+    }
+    .hero-card {
+      position: absolute; z-index: 3;
+      background: rgba(255,255,255,.1); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.14); border-radius: 14px; padding: 12px 16px;
+    }
+    .hc-pts { bottom: 30px; left: -10px; }
+    .hc-pts .pts-lbl  { font-size: 10px; color: rgba(255,255,255,.55); font-weight: 800; letter-spacing: .6px; text-transform: uppercase; }
+    .hc-pts .pts-num  { font-size: 26px; font-weight: 900; color: var(--gold); line-height: 1.1; }
+    .hc-pts .pts-sub  { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 600; }
+    .hc-reward { top: 50px; right: -10px; display: flex; align-items: center; gap: 10px; }
+    .reward-ico {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), #f0c060);
+      display: flex; align-items: center; justify-content: center; font-size: 17px;
+    }
+    .reward-txt .rt-title { font-size: 13px; font-weight: 800; color: white; }
+    .reward-txt .rt-sub   { font-size: 11px; color: rgba(255,255,255,.5); }
+
+    /* ═══════════════════════════════════════════
+       PROOF STRIP
+    ═══════════════════════════════════════════ */
+    #proof {
+      background: var(--white); border-bottom: 1px solid #f0f0f0; padding: 22px 24px;
+    }
+    .proof-row {
+      max-width: 1140px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      gap: 44px; flex-wrap: wrap;
+    }
+    .proof-item { display: flex; align-items: center; gap: 11px; }
+    .proof-ico {
+      width: 42px; height: 42px; border-radius: 11px;
+      background: var(--tiffany-light);
+      display: flex; align-items: center; justify-content: center; font-size: 19px;
+    }
+    .proof-txt strong { font-size: 19px; font-weight: 900; color: var(--text); display: block; line-height: 1.2; }
+    .proof-txt span   { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+    .proof-div { width: 1px; height: 38px; background: #eee; }
+
+    /* ═══════════════════════════════════════════
+       HOW IT WORKS — CUSTOMERS
+    ═══════════════════════════════════════════ */
+    #how { padding: 96px 24px; background: linear-gradient(135deg, #056260 0%, #089490 45%, #0ABAB5 100%); position: relative; overflow: hidden; }
+    #how::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #how::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+
+    .steps { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; position: relative; }
+    .steps::before {
+      content: ''; position: absolute; top: 78px;
+      left: calc(16.66% + 14px); right: calc(16.66% + 14px);
+      height: 2px; background: linear-gradient(90deg, var(--tiffany), var(--gold)); z-index: 0;
+    }
+    .step {
+      background: var(--white); border-radius: var(--radius); padding: 28px 24px;
+      text-align: center; box-shadow: var(--shadow); position: relative; z-index: 1;
+      transition: var(--transition);
+    }
+    .step:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .step-n {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--tiffany), var(--tiffany-dark));
+      color: white; font-size: 13px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(10,186,181,.4);
+    }
+    .step img   { width: 130px; height: 130px; object-fit: contain; margin: 12px auto 22px; }
+    .step h3    { font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 9px; }
+    .step p     { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════
+       FEATURES
+    ═══════════════════════════════════════════ */
+    #features { padding: 96px 24px; background: var(--white); }
+    .feat-layout {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+    .feat-card {
+      background: var(--bg); border-radius: var(--radius); padding: 22px 20px;
+      transition: var(--transition); border: 1px solid transparent;
+    }
+    .feat-card:hover { border-color: var(--tiffany); background: var(--tiffany-light); transform: translateY(-3px); }
+    .feat-card.ga .feat-icon { background: linear-gradient(135deg, var(--gold), #f0a020); }
+    .feat-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--tiffany), var(--tiffany-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 21px; margin-bottom: 12px;
+    }
+    .feat-card h4 { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+    .feat-card p  { font-size: 13px; color: var(--text-light); line-height: 1.5; }
+    .feat-visual { display: flex; justify-content: center; align-items: center; position: relative; }
+    .feat-visual::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(10,186,181,.25) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .feat-lobster {
+      width: 820px; height: auto;
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 16px 40px rgba(10,186,181,.18));
+    }
+
+    /* ═══════════════════════════════════════════
+       CATEGORIES
+    ═══════════════════════════════════════════ */
+    #cats { padding: 80px 24px; background: var(--dark); position: relative; overflow: hidden; }
+    #cats::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #cats::after {
+      content: ''; position: absolute; bottom: -60px; left: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .cats-inner { max-width: 1140px; margin: 0 auto; }
+    .cats-grid {
+      display: grid; grid-template-columns: repeat(6,1fr);
+      gap: 14px; margin-top: 48px;
+    }
+    .cat {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius); padding: 20px 12px; text-align: center;
+      transition: var(--transition); cursor: default;
+    }
+    .cat:hover { background: rgba(10,186,181,.15); border-color: rgba(10,186,181,.4); transform: translateY(-4px); }
+    .cat-em  { font-size: 28px; margin-bottom: 9px; }
+    .cat-nm  { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.65); line-height: 1.3; }
+
+    /* ═══════════════════════════════════════════
+       FOR BUSINESSES
+    ═══════════════════════════════════════════ */
+    #biz { padding: 96px 24px; background: var(--bg); }
+    .biz-layout {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .biz-steps { display: flex; flex-direction: column; gap: 26px; margin-top: 36px; }
+    .biz-step  { display: flex; gap: 18px; align-items: flex-start; }
+    .biz-step-ico {
+      width: 50px; height: 50px; flex-shrink: 0; border-radius: 14px;
+      background: linear-gradient(135deg, var(--tiffany), var(--tiffany-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 21px; box-shadow: 0 6px 18px rgba(10,186,181,.28);
+    }
+    .biz-step h4 { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+    .biz-step p  { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+    .biz-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+    .biz-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--white); border-radius: 10px; padding: 10px 14px;
+      font-size: 13px; font-weight: 700; color: var(--text); box-shadow: var(--shadow);
+    }
+    .biz-pill span { font-size: 15px; }
+    .biz-visual { display: flex; flex-direction: column; align-items: center; gap: 22px; position: relative; }
+    .biz-visual::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(10,186,181,.25) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .biz-lobster {
+      width: 820px; height: auto;
+      animation: float 4.5s ease-in-out infinite;
+      filter: drop-shadow(0 14px 36px rgba(10,186,181,.18));
+    }
+    .free-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--gold), #f0c060);
+      color: var(--dark); font-size: 15px; font-weight: 900;
+      padding: 12px 24px; border-radius: 99px;
+      box-shadow: 0 6px 20px rgba(232,184,75,.38);
+    }
+
+    /* ═══════════════════════════════════════════
+       MULTILINGUAL
+    ═══════════════════════════════════════════ */
+    #multi {
+      padding: 96px 24px;
+      background: linear-gradient(135deg, #056260 0%, #089490 100%);
+      position: relative; overflow: hidden;
+    }
+    #multi::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #multi::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .multi-layout {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .lang-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .lang-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.11);
+      color: rgba(255,255,255,.8); font-size: 14px; font-weight: 700;
+      padding: 9px 16px; border-radius: 99px; transition: var(--transition);
+    }
+    .lang-pill:hover { background: rgba(10,186,181,.2); border-color: rgba(10,186,181,.4); color: white; }
+    .multi-feats { display: flex; flex-direction: column; gap: 18px; margin-top: 30px; }
+    .mf { display: flex; align-items: flex-start; gap: 14px; }
+    .mf-ico {
+      width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px;
+      background: rgba(10,186,181,.15);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .mf-txt strong { font-size: 14px; font-weight: 800; color: white; display: block; }
+    .mf-txt span   { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.5; }
+    .multi-visual { display: flex; justify-content: center; position: relative; }
+    .multi-visual::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.22) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .multi-lobster {
+      width: 820px; height: auto;
+      animation: float 5s ease-in-out infinite;
+      filter: drop-shadow(0 14px 36px rgba(10,186,181,.22));
+    }
+
+    /* ═══════════════════════════════════════════
+       POINTS & REWARDS
+    ═══════════════════════════════════════════ */
+    #rewards { padding: 96px 24px; background: var(--white); }
+    .rewards-inner { max-width: 1140px; margin: 0 auto; }
+    .reward-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 52px; }
+    .rc {
+      border-radius: var(--radius); padding: 34px 26px;
+      position: relative; overflow: hidden; transition: var(--transition);
+    }
+    .rc:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .rc.t { background: linear-gradient(135deg, var(--tiffany), var(--tiffany-dark)); }
+    .rc.g { background: linear-gradient(135deg, var(--gold), #f0a020); }
+    .rc.d { background: linear-gradient(135deg, var(--dark), var(--dark-alt)); }
+    .rc::after {
+      content: ''; position: absolute; bottom: -30px; right: -30px;
+      width: 110px; height: 110px; background: rgba(255,255,255,.07); border-radius: 50%;
+    }
+    .rc-ico   { font-size: 34px; margin-bottom: 18px; }
+    .rc-title { font-size: 21px; font-weight: 900; color: white; margin-bottom: 9px; }
+    .rc-desc  { font-size: 14px; color: rgba(255,255,255,.72); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════
+       DOWNLOAD CTA
+    ═══════════════════════════════════════════ */
+    #download {
+      padding: 90px 24px; background: var(--tiffany);
+      position: relative; overflow: hidden;
+    }
+    #download::before {
+      content: ''; position: absolute; top: -80px; left: -80px;
+      width: 280px; height: 280px; background: rgba(255,255,255,.08); border-radius: 50%;
+    }
+    #download::after {
+      content: ''; position: absolute; bottom: -60px; right: 8%;
+      width: 240px; height: 240px; background: rgba(255,255,255,.06); border-radius: 50%;
+    }
+    .dl-inner {
+      max-width: 1140px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .dl-title { font-size: clamp(26px,3.5vw,42px); font-weight: 900; color: white; margin-bottom: 14px; line-height: 1.15; }
+    .dl-sub   { font-size: 17px; color: rgba(255,255,255,.72); margin-bottom: 32px; max-width: 480px; }
+    .dl-btns  { display: flex; gap: 14px; flex-wrap: wrap; }
+    .store-btn-w {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--white); color: var(--dark); padding: 13px 22px;
+      border-radius: 12px; transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(0,0,0,.14);
+    }
+    .store-btn-w:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,.18); }
+    .store-btn-w svg { width: 24px; height: 24px; }
+    .store-btn-w .sbt-text small  { color: var(--text-muted); }
+    .store-btn-w .sbt-text strong { font-size: 16px; font-weight: 900; color: var(--text); }
+    .dl-lobster {
+      width: 315px; height: auto;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,.14));
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer { background: var(--dark); padding: 60px 24px 28px; }
+    .ft-inner { max-width: 1140px; margin: 0 auto; }
+    .ft-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px;
+      padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.07); margin-bottom: 28px;
+    }
+    .ft-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .ft-brand-logo img { height: 30px; width: auto; }
+    .ft-brand-logo span { font-size: 19px; font-weight: 900; color: var(--tiffany); }
+    .ft-tagline { font-size: 13px; color: rgba(255,255,255,.4); line-height: 1.6; max-width: 240px; margin-bottom: 22px; }
+    .ft-social { display: flex; gap: 9px; }
+    .social-a {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.55); font-size: 13px; font-weight: 800;
+      transition: var(--transition);
+    }
+    .social-a:hover { background: var(--tiffany); color: white; transform: translateY(-2px); }
+    .ft-col h4 { font-size: 12px; font-weight: 800; color: white; letter-spacing: .8px; text-transform: uppercase; margin-bottom: 16px; }
+    .ft-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .ft-col ul a { font-size: 14px; color: rgba(255,255,255,.4); font-weight: 600; transition: var(--transition); }
+    .ft-col ul a:hover { color: var(--tiffany); }
+    .ft-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .ft-copy   { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; }
+    .ft-links  { display: flex; gap: 22px; }
+    .ft-links a { font-size: 13px; color: rgba(255,255,255,.28); font-weight: 600; transition: var(--transition); }
+    .ft-links a:hover { color: var(--tiffany); }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .cats-grid  { grid-template-columns: repeat(4,1fr); }
+      .ft-top     { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .hero-grid  { grid-template-columns: 1fr; text-align: center; gap: 36px; }
+      .hero-sub   { margin: 0 auto 38px; }
+      .hero-btns  { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-lobster { width: 240px; }
+      .hc-pts     { left: 0; bottom: 8px; }
+      .hc-reward  { right: 0; top: 8px; }
+      .steps      { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      .feat-layout { grid-template-columns: 1fr; }
+      .feat-visual { display: none; }
+      .cats-grid  { grid-template-columns: repeat(3,1fr); }
+      .biz-layout { grid-template-columns: 1fr; }
+      .biz-visual { order: -1; }
+      .multi-layout { grid-template-columns: 1fr; }
+      .multi-visual { display: none; }
+      .reward-cards { grid-template-columns: 1fr; }
+      .dl-inner   { grid-template-columns: 1fr; text-align: center; }
+      .dl-sub     { margin: 0 auto 32px; }
+      .dl-btns    { justify-content: center; }
+      .dl-lobster { display: none; }
+      .dl-lobster-wrap { display: none; }
+      .ft-top     { grid-template-columns: 1fr 1fr; }
+      .proof-div  { display: none; }
+
+      /* How section header — stack vertically, hide lobster */
+      .how-header { flex-direction: column; text-align: center; gap: 24px; }
+      .how-lobster-wrap { display: none; }
+
+      /* Biz lobster — cap size and shrink glow */
+      .biz-lobster { max-width: 300px; width: 100%; }
+      .biz-visual::before { width: 300px; height: 300px; }
+
+      /* Proof strip — allow wrapping */
+      .proof-row { gap: 20px; }
+    }
+    @media (max-width: 480px) {
+      .cats-grid  { grid-template-columns: repeat(2,1fr); }
+      .biz-pills  { grid-template-columns: 1fr; }
+      .feat-grid  { grid-template-columns: 1fr; }
+      .ft-top     { grid-template-columns: 1fr; }
+      .hero-btns  { flex-direction: column; align-items: center; }
+      .dl-btns    { flex-direction: column; align-items: center; }
+    }
+
+    /* ── Language Selector ─────────────────────── */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .goog-te-gadget { display: none !important; }
+    body { top: 0 !important; }
+    .lang-selector { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22);
+      color: white; font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 800;
+      padding: 7px 12px; border-radius: 10px; cursor: pointer; transition: var(--transition);
+    }
+    nav.scrolled .lang-btn { background: var(--bg); border-color: #ddd; color: var(--text); }
+    nav.scrolled .lang-btn:hover { background: var(--tiffany-light); border-color: var(--tiffany); color: var(--tiffany); }
+    .lang-btn svg { transition: transform var(--transition); }
+    .lang-selector.open .lang-btn svg { transform: rotate(180deg); }
+    .lang-dropdown {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      background: white; border-radius: 14px; padding: 8px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18); min-width: 172px;
+      display: none; flex-direction: column; gap: 2px;
+      z-index: 9999; border: 1px solid rgba(0,0,0,.06);
+    }
+    .lang-selector.open .lang-dropdown { display: flex; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      background: none; border: none; font-family: 'Nunito', sans-serif;
+      font-size: 14px; font-weight: 700; color: var(--text);
+      padding: 9px 12px; border-radius: 9px; cursor: pointer;
+      transition: var(--transition); text-align: left; width: 100%;
+    }
+    .lang-option:hover  { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option.active { background: var(--tiffany-light); color: var(--tiffany); }
+    .lang-option .lf { font-size: 17px; line-height: 1; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══ MOBILE MENU ══════════════════════════════ -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#how"      onclick="closeMob()">How It Works</a>
+  <a href="#features" onclick="closeMob()">Features</a>
+  <a href="#biz"      onclick="closeMob()">For Businesses</a>
+  <a href="#multi"    onclick="closeMob()">Languages</a>
+  <a href="#download" onclick="closeMob()">Download</a>
+</div>
+
+<!-- ══ NAVBAR ══════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="logo.png" alt="Pinched" style="height:38px; width:auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#biz">For Businesses</a></li>
+      <li><a href="#multi">Languages</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-selector" id="langSelector">
+        <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+          <span id="currentFlag">&#127468;&#127463;</span>
+          <span id="currentLangLabel">EN</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-dropdown">
+          <button class="lang-option active" onclick="setLang('en','&#127468;&#127463;','EN',this)"><span class="lf">&#127468;&#127463;</span> English</button>
+          <button class="lang-option" onclick="setLang('es','&#127466;&#127480;','ES',this)"><span class="lf">&#127466;&#127480;</span> Espa&#241;ol</button>
+          <button class="lang-option" onclick="setLang('fr','&#127467;&#127479;','FR',this)"><span class="lf">&#127467;&#127479;</span> Fran&#231;ais</button>
+          <button class="lang-option" onclick="setLang('de','&#127465;&#127466;','DE',this)"><span class="lf">&#127465;&#127466;</span> Deutsch</button>
+          <button class="lang-option" onclick="setLang('nl','&#127475;&#127473;','NL',this)"><span class="lf">&#127475;&#127473;</span> Nederlands</button>
+          <button class="lang-option" onclick="setLang('ru','&#127479;&#127482;','RU',this)"><span class="lf">&#127479;&#127482;</span> &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button>
+          <button class="lang-option" onclick="setLang('ca','CA&#127988;','CA',this)"><span class="lf">&#127988;</span> Catal&#224;</button>
+          <button class="lang-option" onclick="setLang('ca','VAL&#127754;','VAL',this)"><span class="lf">&#127754;</span> Valenci&#224;</button>
+        </div>
+      </div>
+      <a href="#download" class="btn btn-primary">Get the App</a>
+      <div class="hamburger" onclick="openMob()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-grid container">
+    <div>
+      <div class="hero-badge"><span class="badge-dot"></span>Available on iOS &amp; Android</div>
+      <h1 class="hero-title">
+        Get More,<br>
+        Spend <span class="gld">Less,</span><br>
+        Get <span class="hl">Pinched.</span>
+      </h1>
+      <p class="hero-sub">
+        Discover promotions from local businesses — at home or when you travel.
+        Earn Pinched Points with every stop and redeem rewards where you shop.
+      </p>
+      <div class="hero-btns">
+        <a href="https://play.google.com/store/apps/details?id=com.dannylong.pinchdiscount&pli=1" target="_blank" rel="noopener"><img src="store buttons copy/app store Android (white).png" alt="Get it on Google Play" class="store-badge" /></a>
+        <a href="https://apps.apple.com/app/pinched-app/id6754100636" target="_blank" rel="noopener"><img src="store buttons copy/app store ios (white).png" alt="Download on the App Store" class="store-badge" /></a>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-item"><span class="hs-num">Free</span><span class="hs-lbl">To Download</span></div>
+        <div class="hs-item"><span class="hs-num">11+</span><span class="hs-lbl">Categories</span></div>
+        <div class="hs-item"><span class="hs-num">8</span><span class="hs-lbl">Languages</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-glow"></div>
+      <img src="Lobster welcome.png" alt="Welcome to Pinched" class="hero-lobster" />
+      <div class="hero-card hc-pts">
+        <div class="pts-lbl">Pinched Points</div>
+        <div class="pts-num">2,450</div>
+        <div class="pts-sub">Ready to redeem 🎁</div>
+      </div>
+      <div class="hero-card hc-reward">
+        <div class="reward-ico">🎁</div>
+        <div class="reward-txt">
+          <div class="rt-title">New Reward!</div>
+          <div class="rt-sub">Coffee on us ☕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROOF STRIP ══════════════════════════════ -->
+<div id="proof">
+  <div class="proof-row">
+    <div class="proof-item"><div class="proof-ico">🏪</div><div class="proof-txt"><strong>Local</strong><span>Business Network</span></div></div>
+    <div class="proof-div"></div>
+    <div class="proof-item"><div class="proof-ico">🌍</div><div class="proof-txt"><strong>8</strong><span>Languages</span></div></div>
+    <div class="proof-div"></div>
+    <div class="proof-item"><div class="proof-ico">⭐</div><div class="proof-txt"><strong>Free</strong><span>For Customers</span></div></div>
+    <div class="proof-div"></div>
+    <div class="proof-item"><div class="proof-ico">📲</div><div class="proof-txt"><strong>QR</strong><span>Instant Scanning</span></div></div>
+    <div class="proof-div"></div>
+    <div class="proof-item"><div class="proof-ico">🗺️</div><div class="proof-txt"><strong>Maps</strong><span>Google Integrated</span></div></div>
+  </div>
+</div>
+
+<!-- ══ HOMEPAGE VIDEO ═══════════════════════════ -->
+<section id="video" style="padding: 80px 24px; background: var(--white);">
+  <div class="container">
+    <div class="section-hd fu">
+      <div class="tag">✦ See It In Action</div>
+      <h2 class="section-title">Local deals, promotions & rewards — all in one app</h2>
+      <p class="section-sub">Watch how Pinched connects you with the best promotions around you.</p>
+    </div>
+    <div class="fu" style="max-width:860px; margin: 0 auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(10,186,181,.2);">
+      <video
+        src="Homepage Video.mp4"
+        controls
+        autoplay
+        muted
+        loop
+        playsinline
+        style="width:100%; display:block;"
+      ></video>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS — CUSTOMERS ════════════════ -->
+<section id="how">
+  <div class="container">
+    <div class="fu how-header" style="display:flex; align-items:center; gap:48px; margin-bottom:56px;">
+      <div style="flex:1;">
+        <div class="tag white">✦ For Customers</div>
+        <h2 class="section-title white">Start earning in 3 simple steps</h2>
+        <p class="section-sub white">Discovering local deals and turning visits into rewards has never been easier.</p>
+      </div>
+      <div class="how-lobster-wrap" style="position:relative; flex-shrink:0; transform:translateX(-80px);">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,.28) 0%, transparent 65%); pointer-events:none;"></div>
+        <img src="Lobster easy as 1 2 3.png" alt="Easy as 1,2,3!" style="height:220px; width:auto; position:relative; z-index:1; animation:float 4s ease-in-out infinite; filter:drop-shadow(0 12px 30px rgba(0,0,0,.15));" />
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step fu">
+        <div class="step-n">1</div>
+        <img src="../pinched/assets/searchLobster.png" alt="Search" />
+        <h3>Search &amp; Discover</h3>
+        <p>Find local businesses and promotions near you or wherever you travel. Browse by category, distance, or town.</p>
+      </div>
+      <div class="step fu" style="transition-delay:.15s">
+        <div class="step-n">2</div>
+        <img src="../pinched/assets/QRLobster.png" alt="Scan QR" />
+        <h3>Visit &amp; Scan</h3>
+        <p>Head to the business, enjoy their promotion, and scan their QR code to earn Pinched Points instantly.</p>
+      </div>
+      <div class="step fu" style="transition-delay:.3s">
+        <div class="step-n">3</div>
+        <img src="../pinched/assets/SavedLobster.png" alt="Rewards" />
+        <h3>Earn &amp; Redeem</h3>
+        <p>Accumulate points across all your favourite businesses and redeem them for exclusive rewards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══════════════════════════════════ -->
+<section id="features">
+  <div class="container">
+    <div class="feat-layout">
+      <div>
+        <div class="tag fu">✦ Features</div>
+        <h2 class="section-title fu">Everything you need in one app</h2>
+        <p class="section-sub fu">Pinched packs a full loyalty and discovery platform into a beautifully simple experience.</p>
+        <div class="feat-grid">
+          <div class="feat-card fu">
+            <div class="feat-icon">🔍</div>
+            <h4>Smart Search</h4>
+            <p>Filter by category, distance, or city to find exactly what you're looking for.</p>
+          </div>
+          <div class="feat-card ga fu">
+            <div class="feat-icon">🎁</div>
+            <h4>Pinched Points</h4>
+            <p>Earn points at every business and track your balance with a beautiful breakdown chart.</p>
+          </div>
+          <div class="feat-card fu">
+            <div class="feat-icon">📲</div>
+            <h4>QR Scanning</h4>
+            <p>Instant, secure QR code scanning for earning and redeeming points on the spot.</p>
+          </div>
+          <div class="feat-card ga fu">
+            <div class="feat-icon">🔔</div>
+            <h4>Business Alerts</h4>
+            <p>Subscribe to businesses and get push notifications the moment they post new deals.</p>
+          </div>
+          <div class="feat-card fu">
+            <div class="feat-icon">🗺️</div>
+            <h4>Google Maps</h4>
+            <p>Integrated maps so you always know exactly where a business is located.</p>
+          </div>
+          <div class="feat-card ga fu">
+            <div class="feat-icon">🌐</div>
+            <h4>Auto Translate</h4>
+            <p>Read any post in your language with one tap — perfect for travellers and expats.</p>
+          </div>
+          <div class="feat-card fu">
+            <div class="feat-icon">⭐</div>
+            <h4>Reviews</h4>
+            <p>Rate businesses you've visited to help the community discover the best spots.</p>
+          </div>
+          <div class="feat-card ga fu">
+            <div class="feat-icon">🏷️</div>
+            <h4>Save &amp; Share</h4>
+            <p>Save your favourite promotions and share great deals with friends and family.</p>
+          </div>
+        </div>
+      </div>
+      <div class="feat-visual fu">
+        <img src="Lobster everything you need.png" alt="Start saving" class="feat-lobster" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES ══════════════════════════════ -->
+<section id="cats">
+  <div class="cats-inner">
+    <div class="section-hd fu">
+      <div class="tag white">✦ Categories</div>
+      <h2 class="section-title white">Find deals in every corner of your city</h2>
+      <p class="section-sub white" style="margin:0 auto;">From restaurants to wellness, fashion to finance — Pinched covers every category of local business.</p>
+    </div>
+    <div class="cats-grid">
+      <div class="cat fu"><div class="cat-em">🍽️</div><div class="cat-nm">Food &amp; Drink</div></div>
+      <div class="cat fu" style="transition-delay:.05s"><div class="cat-em">🚴</div><div class="cat-nm">Activities</div></div>
+      <div class="cat fu" style="transition-delay:.1s"><div class="cat-em">💪</div><div class="cat-nm">Health &amp; Wellness</div></div>
+      <div class="cat fu" style="transition-delay:.15s"><div class="cat-em">✂️</div><div class="cat-nm">Beauty &amp; Grooming</div></div>
+      <div class="cat fu" style="transition-delay:.2s"><div class="cat-em">👗</div><div class="cat-nm">Fashion</div></div>
+      <div class="cat fu" style="transition-delay:.25s"><div class="cat-em">✈️</div><div class="cat-nm">Travel &amp; Hospitality</div></div>
+      <div class="cat fu" style="transition-delay:.3s"><div class="cat-em">🏡</div><div class="cat-nm">Home &amp; Garden</div></div>
+      <div class="cat fu" style="transition-delay:.35s"><div class="cat-em">🏢</div><div class="cat-nm">Property</div></div>
+      <div class="cat fu" style="transition-delay:.4s"><div class="cat-em">💳</div><div class="cat-nm">Finance</div></div>
+      <div class="cat fu" style="transition-delay:.45s"><div class="cat-em">🔧</div><div class="cat-nm">Services</div></div>
+      <div class="cat fu" style="transition-delay:.5s"><div class="cat-em">🐾</div><div class="cat-nm">Pets &amp; Supplies</div></div>
+      <div class="cat fu" style="transition-delay:.55s"><div class="cat-em">✨</div><div class="cat-nm">&amp; More</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOR BUSINESSES ══════════════════════════ -->
+<section id="biz">
+  <div class="container">
+    <div class="biz-layout">
+      <div>
+        <div class="tag fu">✦ For Businesses</div>
+        <h2 class="section-title fu">Grow your business with Pinched</h2>
+        <p class="section-sub fu">Reach new customers, reward loyalty, and build a community around your brand — free to get started.</p>
+        <div class="biz-steps">
+          <div class="biz-step fu">
+            <div class="biz-step-ico">📝</div>
+            <div>
+              <h4>Register &amp; Get Approved</h4>
+              <p>Sign up, create your business profile with photos, bio, location and contact details. Our team approves your account quickly.</p>
+            </div>
+          </div>
+          <div class="biz-step fu">
+            <div class="biz-step-ico">📣</div>
+            <div>
+              <h4>Post Promotions</h4>
+              <p>Create eye-catching promotion posts with images, headers and captions. Subscribers get instant push notifications.</p>
+            </div>
+          </div>
+          <div class="biz-step fu">
+            <div class="biz-step-ico">🤝</div>
+            <div>
+              <h4>Reward Your Customers</h4>
+              <p>Scan customer QR codes to award Pinched Points. Set custom reward tiers and let your loyalty programme run itself.</p>
+            </div>
+          </div>
+        </div>
+        <div class="biz-pills">
+          <div class="biz-pill fu"><span>📊</span>Visitor Analytics</div>
+          <div class="biz-pill fu"><span>📅</span>Availability Calendar</div>
+          <div class="biz-pill fu"><span>🖼️</span>Photo Gallery</div>
+          <div class="biz-pill fu"><span>⭐</span>Review Management</div>
+          <div class="biz-pill fu"><span>🔔</span>Push Notifications</div>
+          <div class="biz-pill fu"><span>🌐</span>Auto Translation</div>
+        </div>
+      </div>
+      <div class="biz-visual fu">
+        <img src="LobsterFree.png" alt="100% Free" class="biz-lobster" />
+        <div class="free-badge">🎉 Free to register</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MULTILINGUAL ══════════════════════════════ -->
+<section id="multi">
+  <div class="multi-layout container">
+    <div>
+      <div class="tag white fu">✦ Global Reach</div>
+      <h2 class="section-title white fu">Built for travellers &amp; expats</h2>
+      <p class="section-sub white fu">Pinched automatically translates business posts into your language. No barriers, no confusion — just great local deals wherever you are in the world.</p>
+      <div class="lang-pills fu">
+        <div class="lang-pill">🇬🇧 English</div>
+        <div class="lang-pill">🇪🇸 Spanish</div>
+        <div class="lang-pill">🇫🇷 French</div>
+        <div class="lang-pill">🇩🇪 German</div>
+        <div class="lang-pill">🇳🇱 Dutch</div>
+        <div class="lang-pill">🇷🇺 Russian</div>
+        <div class="lang-pill">🏴 Catalan</div>
+        <div class="lang-pill">🌊 Valencian</div>
+      </div>
+      <div class="multi-feats">
+        <div class="mf fu"><div class="mf-ico">🌐</div><div class="mf-txt"><strong>One-tap translation</strong><span>Instantly translate any post into your language with a single tap.</span></div></div>
+        <div class="mf fu"><div class="mf-ico">📍</div><div class="mf-txt"><strong>Search while travelling</strong><span>Find promotions anywhere — just search by town or city.</span></div></div>
+        <div class="mf fu"><div class="mf-ico">🔔</div><div class="mf-txt"><strong>Localised notifications</strong><span>Alerts and in-app text delivered in your chosen language.</span></div></div>
+      </div>
+    </div>
+    <div class="multi-visual fu">
+      <img src="Lobster Language.png" alt="¡Buenos días!" class="multi-lobster" />
+    </div>
+  </div>
+</section>
+
+<!-- ══ POINTS & REWARDS ══════════════════════════ -->
+<section id="rewards">
+  <div class="rewards-inner container">
+    <div class="section-hd fu">
+      <div class="tag">✦ Pinched Points</div>
+      <h2 class="section-title">A loyalty programme that actually rewards you</h2>
+      <p class="section-sub">Every visit earns you points. Every point gets you closer to something great.</p>
+    </div>
+    <div class="reward-cards">
+      <div class="rc t fu">
+        <div class="rc-ico">📲</div>
+        <div class="rc-title">Earn Points</div>
+        <p class="rc-desc">Visit a business, scan their QR code, and points land in your account instantly. No cards, no paper, no hassle.</p>
+      </div>
+      <div class="rc g fu" style="transition-delay:.15s">
+        <div class="rc-ico">📊</div>
+        <div class="rc-title">Track Progress</div>
+        <p class="rc-desc">Your PP Dashboard shows a beautiful breakdown of points earned across every business and category.</p>
+      </div>
+      <div class="rc d fu" style="transition-delay:.3s">
+        <div class="rc-ico">🎁</div>
+        <div class="rc-title">Redeem Rewards</div>
+        <p class="rc-desc">Each business sets their own reward tiers. The more you visit, the better the rewards you can unlock.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DOWNLOAD CTA ══════════════════════════════ -->
+<section id="download">
+  <div class="dl-inner container">
+    <div>
+      <h2 class="dl-title fu">Ready to start getting Pinched?</h2>
+      <p class="dl-sub fu">Join savvy shoppers discovering local promotions and earning rewards every day. Free to download, free to use.</p>
+      <div class="dl-btns fu">
+        <a href="https://play.google.com/store/apps/details?id=com.dannylong.pinchdiscount&pli=1" target="_blank" rel="noopener"><img src="store buttons copy/app store Android (white).png" alt="Get it on Google Play" class="store-badge" /></a>
+        <a href="https://apps.apple.com/app/pinched-app/id6754100636" target="_blank" rel="noopener"><img src="store buttons copy/app store ios (white).png" alt="Download on the App Store" class="store-badge" /></a>
+      </div>
+    </div>
+    <div class="dl-lobster-wrap" style="position:relative; flex-shrink:0;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:380px; height:380px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,.28) 0%, transparent 65%); pointer-events:none;"></div>
+      <img src="Lobster download.png" alt="Download Pinched" class="dl-lobster" style="position:relative; z-index:1;" />
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div>
+        <div class="ft-brand-logo">
+          <img src="logo.png" alt="Pinched" style="height:32px; width:auto; filter:brightness(0) invert(1);" />
+        </div>
+        <p class="ft-tagline">Discover promotions from local businesses, earn Pinched Points, and redeem rewards wherever you go.</p>
+        <div class="ft-social">
+          <a href="https://www.facebook.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="Facebook">f</a>
+          <a href="https://www.instagram.com/pinched.app" target="_blank" rel="noopener" class="social-a" title="Instagram">ig</a>
+          <a href="https://x.com/pinchedapp" target="_blank" rel="noopener" class="social-a" title="X / Twitter">x</a>
+          <a href="https://tiktok.com/@pinchedapp" target="_blank" rel="noopener" class="social-a" title="TikTok">tk</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>App</h4>
+        <ul>
+          <li><a href="#how">How It Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#cats">Categories</a></li>
+          <li><a href="#rewards">Points &amp; Rewards</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Business</h4>
+        <ul>
+          <li><a href="#biz">Register Free</a></li>
+          <li><a href="#biz">Post Promotions</a></li>
+          <li><a href="#biz">QR Rewards</a></li>
+          <li><a href="#biz">Analytics</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="accessibility.html">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">© 2026 Pinched. All rights reserved.</span>
+      <div class="ft-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50));
+
+  // Mobile menu
+  function openMob()  { document.getElementById('mobMenu').classList.add('open');    document.body.style.overflow = 'hidden'; }
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+  // Scroll fade-up
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fu').forEach(el => io.observe(el));
+</script>
+
+<div id="google_translate_element" style="display:none;"></div>
+<script>
+  /* ── Google Translate ── */
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en', autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+
+  function toggleLang() { document.getElementById('langSelector').classList.toggle('open'); }
+  function closeLang()  { document.getElementById('langSelector').classList.remove('open'); }
+
+  /* Write / clear the googtrans cookie that GT reads on each page load */
+  function gtCookie(val) {
+    var exp = val
+      ? new Date(Date.now() + 365*24*60*60*1000).toUTCString()
+      : 'Thu, 01 Jan 1970 00:00:00 UTC';
+    document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp + '; path=/';
+    try {
+      document.cookie = 'googtrans=' + (val||'') + '; expires=' + exp
+                      + '; path=/; domain=.' + location.hostname;
+    } catch(e) {}
+  }
+
+  function setLang(code, flag, lbl, btn) {
+    document.querySelectorAll('.lang-option').forEach(function(o){ o.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('currentFlag').textContent = flag;
+    document.getElementById('currentLangLabel').textContent = lbl;
+    closeLang();
+    if (code === 'en') {
+      localStorage.removeItem('pinchedLang');
+      localStorage.removeItem('pinchedLangFlag');
+      localStorage.removeItem('pinchedLangLabel');
+      gtCookie('');                          /* clear cookie */
+    } else {
+      localStorage.setItem('pinchedLang',      code);
+      localStorage.setItem('pinchedLangFlag',  flag);
+      localStorage.setItem('pinchedLangLabel', lbl);
+      gtCookie('/en/' + code);              /* set cookie */
+    }
+    /* Remove any stale hash then force a hard reload so GT re-reads the cookie */
+    history.replaceState(null, '', location.pathname + location.search);
+    location.reload(true);
+  }
+
+  /* Restore UI labels and keep the cookie alive across page navigations */
+  window.addEventListener('load', function() {
+    var flag = localStorage.getItem('pinchedLangFlag');
+    var lbl  = localStorage.getItem('pinchedLangLabel');
+    var code = localStorage.getItem('pinchedLang');
+    if (flag) document.getElementById('currentFlag').textContent  = flag;
+    if (lbl)  document.getElementById('currentLangLabel').textContent = lbl;
+    if (code) {
+      document.querySelectorAll('.lang-option').forEach(function(b) {
+        var oc = b.getAttribute('onclick') || '';
+        b.classList.toggle('active', oc.indexOf("'" + code + "'") !== -1);
+      });
+      /* Re-stamp cookie if it got lost during navigation */
+      if (code !== 'en' && document.cookie.indexOf('googtrans=') === -1) {
+        gtCookie('/en/' + code);
+      }
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('#langSelector')) closeLang();
+  });
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
