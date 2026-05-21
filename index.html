@@ -186,6 +186,18 @@
       100% { transform: scale(1); }
     }
     .word-pop { animation: wordPop 0.55s cubic-bezier(.36,.07,.19,.97) forwards; }
+
+    /* Logo pinch */
+    #nav-logo-img { transform-origin: center; display: block; }
+    @keyframes logoPinch {
+      0%   { transform: scaleX(1)    scaleY(1); }
+      18%  { transform: scaleX(1.22) scaleY(0.45); }
+      45%  { transform: scaleX(0.93) scaleY(1.15); }
+      65%  { transform: scaleX(1.04) scaleY(0.94); }
+      82%  { transform: scaleX(0.99) scaleY(1.03); }
+      100% { transform: scaleX(1)    scaleY(1); }
+    }
+    .logo-pinch { animation: logoPinch 0.75s cubic-bezier(.36,.07,.19,.97) forwards; }
     .hero-sub {
       font-size: 18px; color: rgba(255,255,255,.62);
       line-height: 1.7; margin-bottom: 38px; max-width: 460px;
@@ -679,7 +691,7 @@
 <nav id="nav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">
-      <img src="logo.png" alt="Pinched" style="height:38px; width:auto;" />
+      <img src="logo.png" alt="Pinched" id="nav-logo-img" style="height:38px; width:auto;" />
     </a>
     <ul class="nav-links">
       <li><a href="#how">How It Works</a></li>
@@ -1191,6 +1203,21 @@
     }
     pop('word-less',    2000);   /* 2s after load */
     pop('word-pinched', 2700);   /* 0.7s after "less" starts */
+
+    /* Logo pinch — fires after the word pops, then again on hover */
+    function pinchLogo() {
+      var logo = document.getElementById('nav-logo-img');
+      if (!logo) return;
+      logo.classList.remove('logo-pinch');
+      void logo.offsetWidth;
+      logo.classList.add('logo-pinch');
+    }
+    setTimeout(pinchLogo, 3800);
+    var logoEl = document.getElementById('nav-logo-img');
+    if (logoEl) {
+      logoEl.addEventListener('mouseenter', pinchLogo);
+      logoEl.addEventListener('touchstart',  pinchLogo, { passive: true });
+    }
   });
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
